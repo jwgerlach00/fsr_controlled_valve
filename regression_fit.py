@@ -29,6 +29,9 @@ fits = [np.polyfit(volts, grams, deg) for deg in [1, 2, 3, 4]]
 # Plot calibration data
 plt.scatter(volts, grams, label='measured data')
 
+for fit in fits:
+    print(fit)
+
 # Plot fits
 coeffs = []
 x = np.linspace(min(volts), max(volts), 1000)
