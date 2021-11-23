@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <cmath>
+#include <servo.cpp>
 
 
 // Assign pins
@@ -11,10 +12,12 @@ int sampling_rate = 100;
 // Force model vars
 int force_lower = 50, force_upper = 500;  // grams
 int angle_lower = 0, angle_upper = 180;  // degrees
-float min_cal_v = 0.01;  // Corresponding to lowest recorded 500g voltage
-float max_cal_v = 3.2;  // Corresponding to lowest recorded 50g voltage
+float min_cal_v = 0.01f;  // Corresponding to lowest recorded 500g voltage
+float max_cal_v = 3.2f;  // Corresponding to lowest recorded 50g voltage
 
-int analog_bits = 4095;
+// Set bit-rate
+int analog_res = 12;
+int analog_bits = pow(2, analog_res) - 1;
 
 
 class ForceModel {
@@ -31,8 +34,7 @@ class ForceModel {
             this->max_v = max_v;
         }
 
-        double fit_equation(float v) {
-            Serial.println(v);
+        float fit_equation(float v) {
             if (v < min_v) {
                 return max_force;
             }
@@ -47,6 +49,8 @@ class ForceModel {
 };
 
 
+
+
 // Instantiate force fit model
 ForceModel model(force_lower, force_upper, min_cal_v, max_cal_v);
 
@@ -59,19 +63,20 @@ float pin_to_voltage(int pin) {
 
 void setup() {
     Serial.begin(9600);
-    analogReadResolution(12);
-    analogWriteResolution(12);
+    analogReadResolution(analog_res);
+    analogWriteResolution(analog_res);
     // motor.attach(13);
 
     // Set pin modes
     pinMode(voltage_probe_pin, INPUT);
 }
 
+
 void loop() {
     float voltage = pin_to_voltage(voltage_probe_pin);
-    double grams = model.fit_equation(voltage);
-    // double a = 32.58f*pow(voltage, 2) - 244.66f*voltage + 502.76f;
-    delay(1000);
+    float grams = model.fit_equation(voltage);
+
+    delay(100);
     Serial.println(grams);
 }
 
