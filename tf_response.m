@@ -2,7 +2,16 @@ clc
 clear
 close all
 
-%% Stage 1, second order
+%% Stage 1, first order
+R = 796e3;  % Ohms
+C = 0.01e-6;  % Farads
+H_2 = tf(1, [R*C 1]);
+disp(H_2)
+figure()
+bode(H_2)
+title('Stage 1 - 1st order')
+
+%% Stage 2, second order
 R1 = 398e3;  % Ohms
 R2 = 398e3;  % Ohms
 C1 = 0.01e-6;  % Farads
@@ -18,16 +27,7 @@ H_1 = tf(tf_num, tf_den);
 disp(H_1)
 figure()
 bode(H_1)
-title('Stage 1 - 2nd order')
-
-%% Stage 2, first order
-R = 796e3;  % Ohms
-C = 0.01e-6;  % Farads
-H_2 = tf(1, [R*C 1]);
-disp(H_2)
-figure()
-bode(H_2)
-title('Stage 2 - 1st order')
+title('Stage 2 - 2nd order')
 
 %% Total response
 H_tot = H_1 * H_2;
