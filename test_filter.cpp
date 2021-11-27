@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <cmath>
-#include <sin_function.h>
+#include <Sinusoid.h>
 
 
 // Pin assignments
@@ -18,7 +18,7 @@ int loop_res = 100;
 
 // Math vars
 int micro_prefix = 1e6;
-int sine_freq = 20;  // Hz
+int sine_freq = 24;  // Hz
 
 // Instantiate objects
 Sinusoid sinusoid;
@@ -36,8 +36,8 @@ void loop() {
     // Record time beginning loop
     unsigned long loop_start_time = micros();
 
-    // Retreive an output from the sine function
-    float sine_volt = sinusoid.run(sine_freq);
+    // Retrieve an output from the sine function
+    float sine_volt = sinusoid.run(sine_freq, micro_prefix);
 
     // Cast the output to an integer for pin writing
     int sine_pin_bits = (sine_volt-0.55)*4095/2.2;

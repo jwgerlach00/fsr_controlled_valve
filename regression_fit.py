@@ -1,7 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures
 import numpy as np
 from sklearn.metrics import r2_score, mean_squared_error
 
