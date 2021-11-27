@@ -4,15 +4,16 @@
 #include <Sinusoid.h>
 #include <ServoUtils.h>
 
+// Set pins
+int servo_pin = 3;
 
 // Instantiate objects
 TimedLoop timed_loop;
 Sinusoid sine;
-ServoUtils servo_utils;
 Servo servo;
+ServoUtils servo_utils(servo, servo_pin);
 
-// Set pins
-int servo_pin = 3;
+
 
 // Set math variables
 float freq = 0.5f;  // Hz
@@ -25,7 +26,6 @@ int sine_resolution = 1000;
 
 void setup() {
     Serial.begin(115200);
-    servo.attach(servo_pin);
 
     // Enhance sinusoid resolution for mapping
     sine.mag = sine_resolution;
@@ -33,7 +33,7 @@ void setup() {
 
 void loop() {
     unsigned long loop_start_time = micros();
-    servo_utils.test_servo(servo, sine, freq);
+    servo_utils.test_servo(sine, freq);
     timed_loop.micro_wait(loop_start_time, sampling_rate, loop_resolution);
 }
 

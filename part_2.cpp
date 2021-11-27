@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <cmath>
-#include <sin_function.cpp>
+#include <sin_function.h>
 
 
 // Pin assignments

@@ -11,7 +11,6 @@ class ForceModel {
         float min_v, max_v;
     
     public:
-
         ForceModel(int min_force, int max_force, float min_v, float max_v) {
             this->min_force = min_force;
             this->max_force = max_force;

@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <cmath>
-#include <force_model.cpp>
+#include <force_model.h>
 // #include <servo.cpp>
 
 
