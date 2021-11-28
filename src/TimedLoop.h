@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <cmath>
-
 #ifndef TIMEDLOOP_H
 #define TIMEDLOOP_H
 

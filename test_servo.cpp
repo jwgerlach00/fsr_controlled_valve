@@ -4,6 +4,7 @@
 #include <Sinusoid.h>
 #include <ServoUtils.h>
 
+
 // Set pins
 int servo_pin = 3;
 
@@ -12,8 +13,6 @@ TimedLoop timed_loop;
 Sinusoid sine;
 Servo servo;
 ServoUtils servo_utils(servo, servo_pin);
-
-
 
 // Set math variables
 float freq = 0.5f;  // Hz
@@ -36,4 +35,3 @@ void loop() {
     servo_utils.test_servo(sine, freq);
     timed_loop.micro_wait(loop_start_time, sampling_rate, loop_resolution);
 }
-

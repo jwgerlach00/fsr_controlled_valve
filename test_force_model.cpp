@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <cmath>
-#include <force_model.h>
+#include <ForceModel.h>
 // #include <servo.cpp>
 
 
@@ -45,59 +45,3 @@ void loop() {
     delay(100);
     Serial.println(grams);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// void loop() {
-//     int long loop_start_time = micros();
-  
-//     // Get value
-//     float voltage = analogRead(voltage_probe_pin);
-
-//     // Plug into model to get force
-//     float force = model.fit_equation(voltage);
-
-//     // Map force to servo output between 0 and 180 degrees
-//     float servo_angle = map(force, lower_bound, upper_bound, 0, 180);
-
-//     // Move servo to angle
-    
-
-//     long int elapsed = micros() - init_time;
-
-//     while (elapsed < 1000000/sampling_rate) {
-//         delayMicroseconds(sampling_rate/10);
-//         elapsed = micros() - init_time;
-//   }
-
-// }
-
-// void setup() {
-//   // Start serial monitor
-//   Serial.begin(9600);
-
-//   // Set pin modes
-//   pinMode(probe, INPUT);
-// }
-
-// void loop() {
-//   // Read voltage
-//   double sensor_value = analogRead(probe);
-//   double voltage = sensor_value * (3.3 / 1023);
-
-//   // Slow print-out
-//   delay(100);
-//   Serial.println(voltage);
-// }
