@@ -14,25 +14,24 @@ int servo_write_pin = 2;
 int analog_resolution = 12;
 int analog_bits = pow(2, analog_resolution) - 1;
 
-// Set sampling rate
-int milli_wait = 200;  // Milliseconds to wait between samples
-int sampling_rate = milli_wait/1e3;  // Hz
-int loop_resolution = 100;  // Steps for wait loop
-
 // Math vars
 int micro_prefix = 1e6;
+int milli_prefix = 1e3;
+
+// Set sampling rate and window size
+int window_time_length = 200;  // Milliseconds to wait between samples
+int sampling_rate = 100;  // Hz
+int loop_resolution = 100;  // Steps for wait loop
+int window_size = (window_time_length/milli_prefix)*sampling_rate;
 
 // Force model vars
 int force_lower = 50, force_upper = 500;  // grams
 int angle_lower = 0, angle_upper = 180;  // degrees
-float min_cal_v = 0.01f;  // Corresponding to lowest recorded 500g voltage
-float max_cal_v = 3.2f;  // Corresponding to lowest recorded 50g voltage
-
-// Window vars
-int window_size = 6;
+float min_calibration_voltage = 0.01f;  // Corresponding to lowest recorded 500g voltage
+float max_calibration_voltage = 3.2f;  // Corresponding to lowest recorded 50g voltage
 
 // Instantiate objects
-ForceModel force_model(force_lower, force_upper, min_cal_v, max_cal_v);
+ForceModel force_model(force_lower, force_upper, min_calibration_voltage, max_calibration_voltage);
 Servo servo;
 ServoUtils servo_utils(servo, servo_write_pin);
 Window window(window_size);
@@ -54,7 +53,7 @@ void setup() {
 // Main loop variables
 unsigned long times_through_loop = 0;  // Total times through loop during entire run-time
 unsigned long loop_start_time;
-int average_voltage;
+float average_voltage;
 float current_voltage;
 
 void loop() {
@@ -63,7 +62,7 @@ void loop() {
     // Read voltage from filter output
     current_voltage = 3.3*analogRead(filtered_read_pin)/analog_bits;
 
-    if(times_through_loop < window_size) {
+    if(times_through_loop < unsigned(window_size)) {
         // Fill array
         window.populate_array(current_voltage, times_through_loop);
     }
@@ -76,7 +75,9 @@ void loop() {
 
         // Convert voltage to angle
         grams = force_model.fit_equation(average_voltage);
+        grams = int(grams);
         angle = servo_utils.grams_to_angle(grams, force_lower, force_upper);
+        Serial.println(angle);
 
         servo_utils.run_servo(angle);
     }

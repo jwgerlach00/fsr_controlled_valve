@@ -6,7 +6,7 @@
 
 
 // Set pins
-int servo_pin = 3;
+int servo_pin = 2;
 
 // Instantiate objects
 TimedLoop timed_loop;
@@ -17,6 +17,7 @@ ServoUtils servo_utils(servo, servo_pin);
 // Set math variables
 float freq = 0.5f;  // Hz
 int angle = 0;
+int range = 90;
 
 // Set sampling and resolution variables
 int sampling_rate = 1000;
@@ -26,8 +27,9 @@ int sine_resolution = 1000;
 void setup() {
     Serial.begin(115200);
 
-    // Enhance sinusoid resolution for mapping
-    sine.mag = sine_resolution;
+    // Magnitude of 45 and offset of 45
+    sine.mag = range/2;
+    sine.offset = range/2;
 }
 
 void loop() {

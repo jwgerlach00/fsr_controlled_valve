@@ -27,11 +27,11 @@ class Window {
             /*
                 Averages window.
             */
-            int voltage_sum = 0;
+            float voltage_sum = 0;
             for(int i = 0; i < window_size; i++) {
                 voltage_sum += window[i];
             }
-            return voltage_sum/window_size;
+            return voltage_sum/float(window_size);
         }
 
         void replace_oldest(float replacement) {

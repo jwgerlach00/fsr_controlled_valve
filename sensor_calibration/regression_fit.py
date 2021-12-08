@@ -51,4 +51,5 @@ if __name__ == '__main__':
     plt.ylabel('Force (newtons)')
     plt.title('FSR Calibration Curve')
     plt.legend()
+    plt.savefig('calibration_curve')
     plt.show()

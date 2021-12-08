@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <cmath>
 #include <ForceModel.h>
-// #include <servo.cpp>
 
 
 // Assign pins
@@ -10,8 +9,8 @@ int voltage_probe_pin = A0;
 // Force model vars
 int force_lower = 50, force_upper = 500;  // grams
 int angle_lower = 0, angle_upper = 180;  // degrees
-float min_cal_v = 0.01f;  // Corresponding to lowest recorded 500g voltage
-float max_cal_v = 3.2f;  // Corresponding to lowest recorded 50g voltage
+float min_calibration_voltage = 0.01f;  // Corresponding to lowest recorded 500g voltage
+float max_calibration_voltage = 3.2f;  // Corresponding to lowest recorded 50g voltage
 
 // Set bit-rate
 int analog_res = 12;
@@ -19,7 +18,7 @@ int analog_bits = pow(2, analog_res) - 1;
 
 
 // Instantiate force fit model
-ForceModel model(force_lower, force_upper, min_cal_v, max_cal_v);
+ForceModel model(force_lower, force_upper, min_calibration_voltage, max_calibration_voltage);
 
 float pin_to_voltage(int pin) {
     int sensor_value = analogRead(voltage_probe_pin);

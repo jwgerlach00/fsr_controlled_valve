@@ -8,12 +8,23 @@ class ForceModel {
 
         int min_grams, max_grams;
         float min_v, max_v;
+
+        float grams_to_newtons(float grams) {
+            /*
+                Converts from grams to Newtons
+            */
+           float kg = grams / 1e3;
+           float accel_earth = 9.81f;
+           return accel_earth*kg;
+        }
     
     public:
 
         ForceModel(int min_grams, int max_grams, float min_v, float max_v) {
+            // Convert min and max gram weights used for calibration to Newtons
             this->min_grams = min_grams;
             this->max_grams = max_grams;
+
             this->min_v = min_v;
             this->max_v = max_v;
         }
